@@ -3,6 +3,8 @@ const User = require('../models/user.model');
 const RefreshToken = require('../models/refreshToken.model');
 const moment = require('moment-timezone');
 const { jwtExpirationInterval } = require('../../config/vars');
+var qs = require('qs');
+var request = require('superagent');
 
 /**
 * Returns a formated object with tokens
@@ -40,7 +42,6 @@ exports.socialSignup = async (req, res, next) => {
   try {
     // return res.json(req.body);
     let userObj = await User.findOne().where({email:req.body.email});
-    
 
     if (userObj == null) {
       user          = new User;
@@ -106,6 +107,58 @@ exports.socialSignup = async (req, res, next) => {
     return next(User.checkDuplicateEmail(error));
   }
 };
+
+exports.linkedinSignup = async (req,res, next) => {
+  try{
+    const redirect_uri = req.body.redirect_uri;
+    const clientId = process.env.CLIENT_ID;
+    const clientSecret = process.env.CLIENT_SECRET;
+    const code = req.body.code;
+    // return res.json({clientId, client_secret, redirect_uri});
+    
+    /* Data to be sent as body to linkedin */
+    const data = {
+      'grant_type': 'authorization_code',
+      'code': code,
+      'redirect_uri': redirect_uri,
+      'client_id': clientId,
+      'client_secret': clientSecret
+    };
+
+
+    /* Superagent request to get access token */
+    const result = await (request
+        .post('https://www.linkedin.com/oauth/v2/accessToken')
+        .send(qs.stringify(data))
+        .set('Content-Type', 'application/x-www-form-urlencoded')
+        .accept('application/json')
+
+        );
+
+      const obj = JSON.parse(result.text);
+
+    // return res.json(obj);   
+
+    const dataFormat = await(request
+      .get('https://api.linkedin.com/v1/people/~:(id,first-name,email-address,last-name,headline,picture-url,industry,summary,specialties,positions:(id,title,summary,start-date,end-date,is-current,company:(id,name,type,size,industry,ticker)),educations:(id,school-name,field-of-study,start-date,end-date,degree,activities,notes),associations,interests,num-recommenders,date-of-birth,publications:(id,title,publisher:(name),authors:(id,name),date,url,summary),patents:(id,title,summary,number,status:(id,name),office:(name),inventors:(id,name),date,url),languages:(id,language:(name),proficiency:(level,name)),skills:(id,skill:(name)),certifications:(id,name,authority:(name),number,start-date,end-date),courses:(id,name,number),recommendations-received:(id,recommendation-type,recommendation-text,recommender),honors-awards,three-current-positions,three-past-positions,volunteer)')
+      // .send(qs.stringify(data))
+      .query({
+        'oauth2_access_token': obj.access_token,
+        'format': 'json'
+      })
+    );
+    
+    const access_token = obj.access_token;
+    const linkedinData = JSON.parse(dataFormat.text);
+
+    return res.json({linkedinData, access_token});   
+
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+
 
 /**
  * Returns jwt token if valid username and password is provided

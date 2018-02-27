@@ -21,6 +21,13 @@ module.exports = {
     },
   },
 
+  // POST /v1/linkedinSignup
+  linkedinSignup:{
+    body:{
+      code:Joi.string().required(),     
+    },
+  },
+
   // POST /v1/auth/login
   login: {
     body: {
