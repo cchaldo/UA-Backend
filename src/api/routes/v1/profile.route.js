@@ -1,16 +1,35 @@
 const express = require('express');
 const validate = require('express-validation');
 const controller = require('../../controllers/profile.controller');
+const {createProfile} = require('../../validations/profile.validation');
 const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
 
 const router = express.Router();
 
+const multer      = require('multer');
+
+const storage     = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/user_images/')
+  },
+  filename: function (req, file, cb) {
+   
+   let ext =  file.originalname.split(".");
+   ext = ext[ext.length - 1];
+   const filename = Date.now() + `.${ext}`;
+   req.body.picture = filename;
+    cb(null, filename);
+  }
+})
+ 
+const upload = multer({ storage: storage }).single('picture');
+    
 
   /**
-   * @api {get} v1/profile/create User Profile
-   * @apiDescription Get logged in user profile information
+   * @api {post} v1/profile/create User Profile
+   * @apiDescription Create user profile
    * @apiVersion 1.0.0
-   * @apiName UserProfile
+   * @apiName CreateProfile
    * @apiGroup UserProfile
    * @apiPermission user
    *
@@ -30,7 +49,28 @@ const router = express.Router();
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
-   // console.log(authorize(LOGGED_USER));
-	router.route('/create').post( authorize(), controller.create);
+	router.route('/create')
+   .post(authorize(), upload, validate(createProfile), controller.create);
 
-	module.exports = router;
+	
+
+
+  /**
+   * @api {get} v1/profile/view User Profile View
+   * @apiDescription Get logged in user profile information
+   * @apiVersion 1.0.0
+   * @apiName ViewProfile
+   * @apiGroup UserProfile
+   * @apiPermission user
+   *
+   * @apiHeader {String} Athorization  User's access token
+   *
+   *
+   * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
+   */
+  router.route('/view/:userId')
+   .get(authorize(), controller.view);
+
+  
+
+   module.exports = router;

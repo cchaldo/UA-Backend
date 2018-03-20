@@ -34,7 +34,7 @@ Boilerplate/Generator/Starter Project for building RESTful APIs and microservice
 Clone the repo and make it yours:
 
 ```bash
-git clone --depth 1 https://github.com/urbanarray/UA-Backend.git
+git clone https://github.com/urbanarray/UA-Backend.git
 cd UA-Backend
 ```
 

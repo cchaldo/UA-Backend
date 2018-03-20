@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const User = require('../models/user.model');
+const Profile = require('../models/profile.model');
 const RefreshToken = require('../models/refreshToken.model');
 const moment = require('moment-timezone');
 const { jwtExpirationInterval } = require('../../config/vars');
@@ -101,8 +102,9 @@ exports.socialSignup = async (req, res, next) => {
     const accessToken = await currentUser.token();
     const token = generateTokenResponse(currentUser, accessToken);
     const userTransformed = currentUser.transform();
+    const profile = await(Profile.findOne({userId: userTransformed.id}));
   
-    return res.json({ token, user: currentUser });
+    return res.json({ token, user: userTransformed, profile });
 
   } catch (error) {
     return next(User.checkDuplicateEmail(error));
@@ -170,10 +172,9 @@ exports.login = async (req, res, next) => {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
     const token = generateTokenResponse(user, accessToken);
     const userTransformed = user.transform();
+    const profile = await(Profile.findOne({userId: user.id}));
 
-
-
-    return res.json({ token, user: userTransformed });
+    return res.json({ token, user: userTransformed, profile });
   } catch (error) {
     return next(error);
   }
