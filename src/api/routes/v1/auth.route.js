@@ -210,4 +210,18 @@ router.route('/google')
   .post(validate(oAuth), oAuthLogin('google'), controller.oAuth);
 
 
+/**
+ * @api {get} v1/auth/verify/:id Verify
+ * @apiDescription Verify a new user
+ * @apiVersion 1.0.0
+ * @apiName Verify
+ * @apiGroup Auth
+ * @apiPermission public
+ *
+ * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
+ */
+router.route('/verify/:id')
+  .get(controller.verify);
+
+
 module.exports = router;
