@@ -4,9 +4,18 @@ const Profile = require('../models/profile.model');
 const RefreshToken = require('../models/refreshToken.model');
 const moment = require('moment-timezone');
 const { jwtExpirationInterval } = require('../../config/vars');
+
 const qs = require('qs');
 const request = require('superagent');
+
+// send email using nodemailer
 const nodemailer = require('nodemailer');
+const sparkPostTransport = require('nodemailer-sparkpost-transport');
+const transporter = nodemailer.createTransport(sparkPostTransport({sparkPostApiKey:process.env.SPARKPOST_API_KEY }))
+
+const fs = require('fs');
+const path = require('path');
+
 
 /**
 * Returns a formated object with tokens
@@ -27,11 +36,36 @@ function generateTokenResponse(user, accessToken) {
  */
 exports.register = async (req, res, next) => {
   try {
-    const user = await (new User(req.body)).save();
+    req.body.status = 2;
+
+    const user  = await (new User(req.body)).save();
     const userTransformed = user.transform();
     const token = generateTokenResponse(user, user.token());
-    res.status(httpStatus.CREATED);
-    return res.json({ token, user: userTransformed });
+    const link        = 'http://mvp.urbanarray.org/verify/'+user.id;
+
+    const message = "<p>Click on the link below to verfiy your account </p> <p>" 
+                          + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
+
+    let result  = transporter.sendMail({
+      from: ' <social1@urbanarray.org>',
+      // to: 'nizaralihunzai@gmail.com',
+      to: req.body.email,
+      subject: 'Signup',
+      text: '',
+      html: message,
+      // attachments: attachments,
+    }, function(err, info) {
+      if (err) {
+        throw err;
+      } else {
+        console.log('Success: ' + JSON.stringify(info, null, 2));
+        res.status(httpStatus.CREATED);
+        return res.json({ token, user: userTransformed });
+      }
+    });
+
+    // return res.json(1);
+
   } catch (error) {
     return next(User.checkDuplicateEmail(error));
   }
@@ -43,6 +77,7 @@ exports.register = async (req, res, next) => {
 exports.socialSignup = async (req, res, next) => {
   try {
     // return res.json(req.body);
+    req.body.status = 1;
     let userObj = await User.findOne().where({email:req.body.email});
 
     if (userObj == null) {
@@ -50,6 +85,7 @@ exports.socialSignup = async (req, res, next) => {
       user.email    = req.body.email;
       user.name     = req.body.name;
       user.picture  = req.body.picture;
+      user.status   = req.body.status;
       user.sources.push(req.body.source);
       user.acccessToken = req.body.accessToken;
       if (req.body.source == 'facebook') {
@@ -103,8 +139,8 @@ exports.socialSignup = async (req, res, next) => {
     const token = generateTokenResponse(currentUser, accessToken);
     const userTransformed = currentUser.transform();
     const profile = await(Profile.findOne({userId: userTransformed.id}));
-  
-    return res.json({ token, user: userTransformed, profile });
+    console.log(profile)
+    return res.json({ token, user: userTransformed, profile: profile });
 
   } catch (error) {
     return next(User.checkDuplicateEmail(error));
@@ -170,11 +206,14 @@ exports.linkedinSignup = async (req,res, next) => {
 exports.login = async (req, res, next) => {
   try {
     const { user, accessToken } = await User.findAndGenerateToken(req.body);
+    if (user.status == 2) {
+      throw Error('Your account is not verified');
+    }
     const token = generateTokenResponse(user, accessToken);
     const userTransformed = user.transform();
     const profile = await(Profile.findOne({userId: user.id}));
 
-    return res.json({ token, user: userTransformed, profile });
+    return res.json({ token, user: userTransformed, profile: profile });
   } catch (error) {
     return next(error);
   }
@@ -215,3 +254,16 @@ exports.refresh = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.verify = async (req, res, next) => {
+  try{
+    const currentUser = await User.findById(req.params.id);
+    currentUser.status = 1;
+    const user = await currentUser.save();
+    const userTransformed = user.transform();
+    return res.json({user: userTransformed});
+  }
+  catch(error){
+    return res.json(error);
+  }
+}

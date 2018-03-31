@@ -38,6 +38,10 @@ const userSchema = new mongoose.Schema({
     index: true,
     trim: true,
   },
+  status:{
+    type:Number,
+    default:1,
+  },
   facebookId: {
   
   },
