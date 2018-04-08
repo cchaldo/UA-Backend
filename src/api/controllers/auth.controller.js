@@ -1,7 +1,12 @@
 const httpStatus = require('http-status');
+
 const User = require('../models/user.model');
+
 const Profile = require('../models/profile.model');
+const PasswordReset = require('../models/passwordReset.model');
+
 const RefreshToken = require('../models/refreshToken.model');
+
 const moment = require('moment-timezone');
 const { jwtExpirationInterval } = require('../../config/vars');
 
@@ -15,6 +20,9 @@ const transporter = nodemailer.createTransport(sparkPostTransport({sparkPostApiK
 
 const fs = require('fs');
 const path = require('path');
+// const moment = require('moment');
+
+
 
 
 /**
@@ -41,7 +49,7 @@ exports.register = async (req, res, next) => {
     const user  = await (new User(req.body)).save();
     const userTransformed = user.transform();
     const token = generateTokenResponse(user, user.token());
-    const link        = 'http://mvp.urbanarray.org/verify/'+user.id;
+    const link  = 'http://mvp.urbanarray.org/verify/'+user.id;
 
     const message = "<p>Click on the link below to verfiy your account </p> <p>" 
                           + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
@@ -255,6 +263,8 @@ exports.refresh = async (req, res, next) => {
   }
 };
 
+
+// Verify User account
 exports.verify = async (req, res, next) => {
   try{
     const currentUser = await User.findById(req.params.id);
@@ -262,6 +272,91 @@ exports.verify = async (req, res, next) => {
     const user = await currentUser.save();
     const userTransformed = user.transform();
     return res.json({user: userTransformed});
+  }
+  catch(error){
+    return res.json(error);
+  }
+}
+
+
+// Reset Password
+exports.resetPassword = async (req, res, next) => {
+  try{
+    const user = await User.findOne({email: req.body.email});
+    if (!user) {
+      return res.json({
+        error: "You have entered an incorrect email address"
+      });
+    }
+
+    let code = "";
+    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (let i = 0; i < 32; i++)
+      code += possible.charAt(Math.floor(Math.random() * possible.length));
+    
+    const date = moment().utc().format('YYYY-MM-DD');
+    const expiryDate = moment(date, "YYYY-MM-DD").add(2, 'days');
+
+    const resetpassword = await new PasswordReset;
+    resetpassword.code = code;
+    resetpassword.userId = user.id;
+    resetpassword.expiryDate = expiryDate;
+    await resetpassword.save();
+
+    const link  = 'http://mvp.urbanarray.org/resetpassword/'+code;
+
+    const message = "<p>Click on the link below to reset your password </p> <p>" 
+                          + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
+
+    let result  = transporter.sendMail({
+      from: '<social1@urbanarray.org>',
+      to: user.email,
+      subject: 'Reset Password',
+      text: '',
+      html: message,
+      // attachments: attachments,
+    }, function(err, info) {
+      if (err) {
+        throw err;
+      } else {
+        console.log('Success: ' + JSON.stringify(info, null, 2));
+        res.status(httpStatus.CREATED);
+        return res.json(true);
+      }
+    });
+    
+  }
+  catch(error){
+    return res.json(error);
+  }
+
+}
+
+
+exports.setNewPassword = async (req, res) => {
+  try{
+    const resetpassword = await PasswordReset.findOne({code: req.body.code});
+
+    if (resetpassword && resetpassword !== null) {
+      const date = moment().utc().format('YYYY-MM-DD');
+      const expiryDate = moment(resetpassword.expiryDate).format('YYYY-MM-DD');
+      if (expiryDate >= date) {
+        const targetUser = await User.findOne(resetpassword.userId);
+        targetUser.password = req.body.password;
+        const user = await targetUser.save();
+
+        return res.json(true);
+
+      }
+      else{
+        return res.json({'error':'Your token has been expired'});
+      }
+    }
+    else{
+      return res.json({'error':'Your token has been expired'});
+    }
+
   }
   catch(error){
     return res.json(error);
