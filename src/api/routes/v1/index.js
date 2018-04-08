@@ -2,6 +2,7 @@ const express = require('express');
 const userRoutes = require('./user.route');
 const authRoutes = require('./auth.route');
 const profileRoutes = require('./profile.route');
+const skillRoutes = require('./skill.route');
 
 const router = express.Router();
 
@@ -19,5 +20,6 @@ router.use('/uploads/user_images', express.static('uploads/user_images'));
 router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
 router.use('/profile', profileRoutes);
+router.use('/skill', skillRoutes);
 
 module.exports = router;

@@ -7,5 +7,13 @@ module.exports = {
 			firstName:Joi.string().min(2).required(),
 			lastName:Joi.string(),
 		}
-	}
+	},
+	
+	updateProfile: {
+		body:{
+			firstName:Joi.string().min(2).required(),
+			lastName:Joi.string(),
+		}
+	},
+
 }

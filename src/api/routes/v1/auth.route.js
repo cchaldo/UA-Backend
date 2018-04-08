@@ -9,7 +9,7 @@ const {
   refresh,
   socialSignup,
   linkedinSignup,
-  
+  setNewPassword,
 } = require('../../validations/auth.validation');
 
 const router = express.Router();
@@ -218,10 +218,47 @@ router.route('/google')
  * @apiGroup Auth
  * @apiPermission public
  *
+ *
  * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
  */
 router.route('/verify/:id')
   .get(controller.verify);
+
+
+/**
+ * @api {post} v1/auth/resetpassword
+ * @apiDescription Reset Password
+ * @apiVersion 1.0.0
+ * @apiName Reset Password
+ * @apiGroup Auth
+ * @apiPermission public
+ *
+ * @apiParam  {String}  email  Email
+ *
+ * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
+ */
+
+router.route('/resetpassword')
+  .post(controller.resetPassword);
+
+
+/**
+ * @api {post} v1/auth/setnewpassword
+ * @apiDescription Set New Password
+ * @apiVersion 1.0.0
+ * @apiName Set New Password
+ * @apiGroup Auth
+ * @apiPermission public
+ *
+ * @apiParam  {String}  password  Password
+ * @apiParam  {String}  code  Code Received as a param form email link
+ *
+ * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
+ */
+
+router.route('/setnewpassword')
+  .post(validate(setNewPassword), controller.setNewPassword);
+
 
 
 module.exports = router;
