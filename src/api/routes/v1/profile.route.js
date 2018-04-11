@@ -96,7 +96,7 @@ const upload = multer({ storage: storage }).single('picture');
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
-  router.route('/view/:userId')
+  router.route('/view/:id')
    .get(authorize(), controller.view);
 
   

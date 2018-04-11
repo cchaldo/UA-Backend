@@ -17,7 +17,8 @@ exports.create = async (req, res, next) => {
 
 exports.view = async (req, res, next) => {
 	try{
-		const profile = await Profile.find({userId: req.params.userId});
+		const profile = await Profile.findById(req.params.id);
+
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
@@ -33,7 +34,6 @@ exports.view = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
 	try{
-		// const profile = await Profile.find({userId: req.params.id});
       const profile = await Profile.update({_id: req.params.id}, req.body);
 
     	res.status(httpStatus.OK);
