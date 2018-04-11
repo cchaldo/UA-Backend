@@ -1,40 +1,39 @@
 const express = require('express');
 const validate = require('express-validation');
-const controller = require('../../controllers/skill.controller');
+const controller = require('../../controllers/userSkill.controller');
 const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
-const {createSkill,updateSkill} = require('../../validations/skill.validation');
+const {createUserSkill,updateUserSkill} = require('../../validations/userSkill.validation');
 
 const router = express.Router();
 
 
   /**
-   * @api {post} v1/skill/create  Skill
-   * @apiDescription Create Skill
+   * @api {post} v1/userSkill/create  User Skill
+   * @apiDescription Create User Skill
    * @apiVersion 1.0.0
-   * @apiName CreateSkill
-   * @apiGroup Skill
-   * @apiPermission admin
+   * @apiName CreateUserSkill
+   * @apiGroup User Skill
+   * @apiPermission admin, user
    *
    * @apiHeader {String} Athorization  User's access token
    *
-   * @apiParam  {String}             name     			SKill's name
-   *
-   * @apiSuccess {String}  name       Skill's name
+   * @apiParam  {String}             skillId          skillId comes from skills 
+   * @apiParam  {String}             userId     			userId comes from user 
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
 	router.route('/create')
-   .post(authorize(), validate(createSkill), controller.create);
+   .post(authorize(), validate(createUserSkill), controller.create);
 
 
 
   /**
-   * @api {get} v1/skill/view/:id Skill View
-   * @apiDescription Get Skill
+   * @api {get} v1/userSkill/view/:id User Skill View
+   * @apiDescription Get User Skill
    * @apiVersion 1.0.0
-   * @apiName ViewSkill
-   * @apiGroup Skill
-   * @apiPermission admin
+   * @apiName ViewUserSkill
+   * @apiGroup User Skill
+   * @apiPermission admin,user
    *
    * @apiHeader {String} Athorization  User's access token
    *
@@ -45,57 +44,51 @@ const router = express.Router();
 
   
   /**
-   * @api {get} v1/skill/index Skills List
-   * @apiDescription Get Skills List
+   * @api {get} v1/userSkill/index/:userId User Skills List
+   * @apiDescription Get User Skills List
    * @apiVersion 1.0.0
-   * @apiName SkillsList
-   * @apiGroup Skill
-   * @apiPermission admin
+   * @apiName UserSkillsList
+   * @apiGroup User Skill
+   * @apiPermission admin, user
    *
    * @apiHeader {String} Athorization  User's access token
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
-  router.route('/index')
+  router.route('/index/:userId')
    .get(authorize(), controller.index);
 
   
 
-
-
   /**
-   * @api {patch} v1/skill/update/:id Skill
-   * @apiDescription update skill
+   * @api {patch} v1/userSkill/update/:id User Skill Update
+   * @apiDescription update user skill
    * @apiVersion 1.0.0
-   * @apiName UpdateSkill
-   * @apiGroup Skill
+   * @apiName UpdateUserSkill
+   * @apiGroup User Skill
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
    *
-   * @apiParam  {String}             name           SKill's name
-   *
-   * @apiSuccess {String}  name       Skill's name
+   * @apiParam  {String}             skillId          skillId comes from skills 
+   * @apiParam  {String}             userId           userId comes from user 
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
   router.route('/update/:id')
-   .patch(authorize(), validate(updateSkill), controller.update);
+   .patch(authorize(), validate(updateUserSkill), controller.update);
 
 
-  
-
+ 
   /**
-   * @api {delete} v1/skill/delete/:id Skill
-   * @apiDescription delete skill
+   * @api {delete} v1/userSkill/delete/:id User Skill Delete
+   * @apiDescription delete user skill
    * @apiVersion 1.0.0
-   * @apiName DeleteSkill
-   * @apiGroup Skill
+   * @apiName DeleteUserSkill
+   * @apiGroup User Skill
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
-   * 
-   * @apiSuccess {Boolean}  success true       
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
@@ -103,4 +96,5 @@ const router = express.Router();
    .delete(authorize(), controller.delete);
 
 
+ 
    module.exports = router;
