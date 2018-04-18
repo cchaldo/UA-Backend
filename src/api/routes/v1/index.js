@@ -5,6 +5,9 @@ const profileRoutes = require('./profile.route');
 const skillRoutes = require('./skill.route');
 const userSkillRoutes = require('./userSkill.route');
 const roleRoutes = require('./role.route');
+const volunteerRoutes = require('./volunteer.route');
+const resourceRoutes = require('./resource.route');
+const projectRoutes = require('./project.route');
 
 const router = express.Router();
 
@@ -25,5 +28,8 @@ router.use('/profile', profileRoutes);
 router.use('/skill', skillRoutes);
 router.use('/userSkill', userSkillRoutes);
 router.use('/role', roleRoutes);
+router.use('/volunteer', volunteerRoutes);
+router.use('/resource', resourceRoutes);
+router.use('/project', projectRoutes);
 
 module.exports = router;
