@@ -18,7 +18,14 @@ const profileSchema = new mongoose.Schema({
   city:{
     type: String,
   },
-  availability:[],
+
+  availability_start_date:{
+    type:Date,
+  },
+
+  availability_end_date:{
+    type:Date,
+  },
 
   noMedConditions:{
     type: Boolean,

@@ -6,7 +6,6 @@ module.exports = {
   createProject: {
     body: {
       name: Joi.string().required(),
-      userId: Joi.string().required(),
     },
   },
 
