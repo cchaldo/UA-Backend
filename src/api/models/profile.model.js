@@ -20,19 +20,19 @@ const profileSchema = new mongoose.Schema({
   },
 
   availability_start_date:{
-    type:Date,
+    type:String,
   },
 
   availability_end_date:{
-    type:Date,
+    type:String,
   },
 
   noMedConditions:{
-    type: Boolean,
+    type: Number,
   },
 
   noCriminal:{
-    type: Boolean,
+    type: Number,
   },
 
   howToContribute: {
