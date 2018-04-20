@@ -35,7 +35,7 @@ exports.view = async (req, res, next) => {
 exports.update = async (req, res, next) => {
 	try{
       	const update = await Profile.update({_id: req.params.id}, req.body);
-		const profile = await Profile.findById(req.params.id);
+		const profile = await Profile.findOne({userId: req.params.id});
 
 
     	res.status(httpStatus.OK);
