@@ -34,11 +34,14 @@ exports.view = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
 	try{
-      const profile = await Profile.update({_id: req.params.id}, req.body);
+      	const update = await Profile.update({_id: req.params.id}, req.body);
+		const profile = await Profile.findById(req.params.id);
+
 
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
+    						update,
     						profile 
     					});
 	}
