@@ -28,11 +28,11 @@ const profileSchema = new mongoose.Schema({
   },
 
   noMedConditions:{
-    type: Number,
+    type: Boolean,
   },
 
   noCriminal:{
-    type: Number,
+    type: Boolean,
   },
 
   howToContribute: {
