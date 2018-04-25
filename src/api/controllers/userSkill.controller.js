@@ -4,7 +4,19 @@ const { handler: errorHandler } = require('../middlewares/error');
 
 exports.create = async (req, res, next) => {
 	try{
+		
+		const check_skill = await UserSkill.find()
+								.where({userId:req.body.userId, skillId:req.body.skillId, status:1 });
+
+		if (check_skill) {
+			return res.json({
+				success: true,
+				user_skill: check_skill,
+				message:'Skill already exist'
+			});
+		}
 		const userSkillObj  = await new UserSkill(req.body);
+
 
 		const user_skill     = await userSkillObj.save();
     	res.status(httpStatus.OK);
@@ -37,7 +49,7 @@ exports.view = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
 	try{
-		const user_skill = await UserSkill.find().where({userId: req.params.userId, status: 1});
+		const user_skill = await UserSkill.find().where({userId: req.params.userId, status: 1}).populate('skillId');
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
