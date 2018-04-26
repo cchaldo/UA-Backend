@@ -8,7 +8,8 @@ exports.create = async (req, res, next) => {
 		const check_skill = await UserSkill.find()
 								.where({userId:req.body.userId, skillId:req.body.skillId, status:1 });
 
-		if (check_skill) {
+
+		if (check_skill && check_skill.length > 0 ) {
 			return res.json({
 				success: true,
 				user_skill: check_skill,
