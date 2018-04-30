@@ -36,10 +36,16 @@ exports.index = async (req, res, next) => {
   try {
     const users = await User.list(req.query);
     const transformedUsers = users.map(user => user.transform());
-    res.json(transformedUsers);
-  } catch (error) {
-    next(error);
-  }
+   	
+	res.status(httpStatus.OK);
+	return res.json({
+						success: true,
+						user: transformedUsers
+					});
+	}
+	catch(error){
+		return res.json(error);
+	}
 }
 
 
