@@ -33,18 +33,13 @@ exports.view = async (req, res, next) => {
 }
 
 exports.index = async (req, res, next) => {
-	try{
-		const user = await User.find();
-    	res.status(httpStatus.OK);
-    	return res.json({
-    						success: true,
-    						user
-    					});
-	}
-	catch(error){
-		return res.json(error);
-	}
-
+  try {
+    const users = await User.list(req.query);
+    const transformedUsers = users.map(user => user.transform());
+    res.json(transformedUsers);
+  } catch (error) {
+    next(error);
+  }
 }
 
 
