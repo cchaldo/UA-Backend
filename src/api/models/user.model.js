@@ -11,7 +11,7 @@ const { env, jwtSecret, jwtExpirationInterval } = require('../../config/vars');
 /**
 * User Roles
 */
-const roles = ['user', 'admin'];
+const roles = ['user', 'admin', 'project manager', 'area manager'];
 const socialSignupSources = ['facebook', 'google', 'linkedIn'];
 
 /**
@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
   
   role: {
     type: String,
-    enum: roles,
+    // enum: roles,
     default: 'user',
   },
   picture: {
