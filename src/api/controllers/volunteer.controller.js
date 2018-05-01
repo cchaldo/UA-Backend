@@ -5,6 +5,10 @@ const { handler: errorHandler } = require('../middlewares/error');
 exports.create = async (req, res, next) => {
 	try{
     	req.body.status = 2;
+    	if (req.body.role =="undefined" || req.body.role == null || req.body.role == '' ) {
+    		req.body.role == "user";
+    	}
+    		
 		const userObj  = await new User(req.body);
 		const user     = await userObj.save();
     	res.status(httpStatus.OK);
