@@ -49,7 +49,7 @@ exports.register = async (req, res, next) => {
     const user  = await (new User(req.body)).save();
     const userTransformed = user.transform();
     const token = generateTokenResponse(user, user.token());
-    const link  = 'http://mvp.urbanarray.org/verify/'+user.id;
+    const link  = 'http://mvp.urbanarray.org/completeAccount/'+user.id;
 
     const message = "<p>Click on the link below to verfiy your account </p> <p>" 
                           + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
