@@ -17,12 +17,13 @@ exports.create = async (req, res, next) => {
 		const userObj  = await new User(req.body);
 		const user     = await userObj.save();
 
-		const link  = 'http://mvp.urbanarray.org/verify/'+user.id;
-	    const message = "<p>You have been invited, click on the link below to verfiy your account </p> <p>" 
+		const link  = 'http://mvp.urbanarray.org/completeAccount/'+user.id;
+	    const message = "<p>You have been invited, Click on the link below to verfiy your account </p> <p>" 
 	                          + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
 
 	    let result  = transporter.sendMail({
 	      from: ' <social1@urbanarray.org>',
+	      // to: 'nizaralihunzai@gmail.com',
 	      to: user.email,
 	      subject: 'Invitation',
 	      text: '',
