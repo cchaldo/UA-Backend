@@ -99,13 +99,44 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
 	try{
-      const user = await User.update({_id: req.params.id}, {status:0});
+      
+	}
+	catch(error){
+		return res.json(error);
+	}
+}
 
-    	res.status(httpStatus.OK);
-    	return res.json({
-    						success: true,
-    						'message': 'deleted'
-    					});
+exports.resendInvitation = async (req, res, next) => {
+	try{
+		const {email} = req.body;
+	    const [user] = await User.find().where({email: email});
+
+	    if (user) {
+
+	      const link  = 'http://mvp.urbanarray.org/completeAccount/'+user.id;
+		    const message = "<p>You have been invited, Click on the link below to verfiy your account </p> <p>" 
+		                          + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
+
+		    let result  = transporter.sendMail({
+		      from: ' <social1@urbanarray.org>',
+		      to: user.email,
+		      subject: 'Invitation',
+		      text: '',
+		      html: message,
+		    }, function(err, info) {
+		      if (err) {
+		        throw err;
+		      } else {
+		        console.log('Success: ' + JSON.stringify(info, null, 2));
+		        res.status(httpStatus.CREATED);
+		        return res.json({ user: userTransformed });
+		      }
+		    });
+
+	    	res.status(httpStatus.OK);
+			 
+				return res.json({user});
+      }
 	}
 	catch(error){
 		return res.json(error);

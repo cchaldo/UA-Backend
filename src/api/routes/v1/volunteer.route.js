@@ -99,5 +99,22 @@ const router = express.Router();
   router.route('/delete/:id')
    .delete(authorize(), controller.delete);
 
+  /**
+   * @api {post} v1/volunteer/resend-invitation Resend Invitation
+   * @apiDescription resend invitation to Volunteer
+   * @apiVersion 1.0.0
+   * @apiName Resend Volunteer
+   * @apiGroup Volunteer
+   * @apiPermission admin
+   *
+   * @apiHeader {String} Athorization  User's access token
+   * 
+   * @apiSuccess {Boolean}  success true       
+   *
+   * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
+   */
+  router.route('/resend-invitation')
+   .post(authorize(), controller.resendInvitation);
+
 
    module.exports = router;
