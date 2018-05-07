@@ -117,4 +117,40 @@ const router = express.Router();
    .post(authorize(), controller.resendInvitation);
 
 
+  /**
+   * @api {get} v1/volunteer/find-user/:id Find User
+   * @apiDescription Find User
+   * @apiVersion 1.0.0
+   * @apiName Find User
+   * @apiGroup Volunteer
+   * @apiPermission admin
+   *
+   * @apiHeader {String} Athorization  User's access token
+   * 
+   * @apiSuccess {Boolean}  success true       
+   *
+   * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
+   */
+  router.route('/find-user/:id')
+   .get(controller.findUser);
+
+
+  /**
+   * @api {post} v1/volunteer/accept-invitation Accept Invitation
+   * @apiDescription accept invitation
+   * @apiVersion 1.0.0
+   * @apiName Accept Invitation
+   * @apiGroup Volunteer
+   * @apiPermission admin
+   *
+   * @apiHeader {String} Athorization  User's access token
+   * 
+   * @apiSuccess {Boolean}  success true       
+   *
+   * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
+   */
+  router.route('/accept-invitation')
+   .post(controller.acceptInvitation);
+
+
    module.exports = router;
