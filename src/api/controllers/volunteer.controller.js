@@ -164,6 +164,7 @@ exports.findUser = async (req, res, next) => {
 
 exports.acceptInvitation = async (req, res, next) => {
 	try{
+		req.body.status = 1;
 		req.body.password = await bcrypt.hash(req.body.password, 10);
 		const update = await User.update({
 				_id: req.params.id
