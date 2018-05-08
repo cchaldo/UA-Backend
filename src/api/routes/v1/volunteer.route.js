@@ -136,7 +136,7 @@ const router = express.Router();
 
 
   /**
-   * @api {post} v1/volunteer/accept-invitation Accept Invitation
+   * @api {post} v1/volunteer/accept-invitation/:id Accept Invitation
    * @apiDescription accept invitation
    * @apiVersion 1.0.0
    * @apiName Accept Invitation
@@ -149,7 +149,7 @@ const router = express.Router();
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
-  router.route('/accept-invitation')
+  router.route('/accept-invitation/:id')
    .post(controller.acceptInvitation);
 
 

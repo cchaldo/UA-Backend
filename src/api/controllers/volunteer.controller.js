@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const User = require('../models/user.model');
 const { handler: errorHandler } = require('../middlewares/error');
-
+const bcrypt = require('bcryptjs');
 // send email using nodemailer
 const nodemailer = require('nodemailer');
 const sparkPostTransport = require('nodemailer-sparkpost-transport');
@@ -19,7 +19,7 @@ exports.create = async (req, res, next) => {
 
 		const link  = 'http://mvp.urbanarray.org/completeAccount/'+user.id;
 	    const message = "<p>You have been invited, Click on the link below to verfiy your account </p> <p>" 
-	                          + "<a href="+link +" >"+ 'Click Here' +"</a> </p>"; 
+	                          + "<a href="+link +" >"+ 'Click Here' +"</a> </p>";
 
 	    let result  = transporter.sendMail({
 	      from: ' <social1@urbanarray.org>',
@@ -164,6 +164,18 @@ exports.findUser = async (req, res, next) => {
 
 exports.acceptInvitation = async (req, res, next) => {
 	try{
+		req.body.password = await bcrypt.hash(req.body.password, 10);
+		const update = await User.update({
+				_id: req.params.id
+		}, req.body);
+
+		const user = await User.find({_id: req.params.id});
+    	res.status(httpStatus.OK);
+    	return res.json({
+    						success: true,
+								user,
+								update
+    					});
 		
 	}
 	catch(error){
