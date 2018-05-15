@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const Project = require('../models/project.model');
 const { handler: errorHandler } = require('../middlewares/error');
+const paginate = require('mongoose-paginate');
 
 exports.create = async (req, res, next) => {
   try{
@@ -17,6 +18,8 @@ exports.create = async (req, res, next) => {
 
 
 exports.view = async (req, res, next) => {
+  
+  
   try{
     const project = await Project.findById(req.params.id);
       res.status(httpStatus.OK);
@@ -32,11 +35,18 @@ exports.view = async (req, res, next) => {
 }
 
 exports.index = async (req, res, next) => {
+  
   try{
-    const project = await Project.find();
-      res.status(httpStatus.OK);
+    
+    const {page, limit} = req.query;
+    const project = await Project.paginate({}, {
+      page: page,
+      limit: 10
+    })
+    
+    res.status(httpStatus.OK);
       return res.json({
-                success: true,
+        success: true,
                 project
               });
   }
