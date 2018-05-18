@@ -39,7 +39,7 @@ exports.index = async (req, res, next) => {
   try{
     
     const {page, limit} = req.query;
-    const project = await Project.paginate({}, {
+    const project = await Project.paginate({status: 1}, {
       page: page,
       limit: 10
     })
