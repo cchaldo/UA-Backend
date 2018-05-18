@@ -10,7 +10,35 @@ const projectSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    trim: true,
   },
+  
+  description: {
+    type: String
+  },
+
+  place: {
+    type: String,
+  },
+
+  date: {
+    type: Date,
+  },
+
+  time : {
+    type: Date, 
+    default: Date.now 
+  },
+
+  pgoals: {
+    type: String,
+  },
+
+  pkeywords: {
+    type: String,
+  },
+
+
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
