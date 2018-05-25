@@ -2,6 +2,8 @@ const httpStatus = require('http-status');
 const Project = require('../models/project.model');
 const { handler: errorHandler } = require('../middlewares/error');
 const paginate = require('mongoose-paginate');
+const places = require('./places.controller');
+
 
 exports.create = async (req, res, next) => {
   try{
@@ -21,7 +23,7 @@ exports.view = async (req, res, next) => {
   
   
   try{
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id).populate(['place']);
       res.status(httpStatus.OK);
       return res.json({
                 success: true,

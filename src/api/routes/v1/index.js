@@ -8,6 +8,7 @@ const roleRoutes = require('./role.route');
 const volunteerRoutes = require('./volunteer.route');
 const resourceRoutes = require('./resource.route');
 const projectRoutes = require('./project.route');
+const placesRoutes = require('./places.route');
 
 const router = express.Router();
 
@@ -31,5 +32,6 @@ router.use('/role', roleRoutes);
 router.use('/volunteer', volunteerRoutes);
 router.use('/resource', resourceRoutes);
 router.use('/project', projectRoutes);
+router.use('/places', placesRoutes);
 
 module.exports = router;
