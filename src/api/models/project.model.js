@@ -7,20 +7,26 @@ const paginate = require('mongoose-paginate');
  */
 const projectSchema = new mongoose.Schema({
 
+  // Project name
   name: {
     type: String,
     required: true,
     trim: true,
   },
 
+
+  // Project Type
   projectType: {
     type: Number,
   },
   
+  // Project Description
   description: {
     type: String
   },
 
+
+  // Project Place
   place: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Places',
