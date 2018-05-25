@@ -12,13 +12,19 @@ const projectSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+
+  projectType: {
+    type: Number,
+  },
   
   description: {
     type: String
   },
 
   place: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Places',
+    required: true,
   },
 
   date: {
