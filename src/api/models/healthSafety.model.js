@@ -28,7 +28,9 @@ const healthSafetySchema = new mongoose.Schema({
 
 
 
-});
+},
+    { strict: false }
+);
 
 const HealthSafety = mongoose.model('HealthSafety', healthSafetySchema);
 module.exports = HealthSafety;

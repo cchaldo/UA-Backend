@@ -19,10 +19,12 @@ const communicationSchema = new mongoose.Schema({
     //     required: true,
     // },
 
+    
+    
+},
+{strict: false}
 
-
-
-});
+);
 
 const Communication = mongoose.model('Communication', communicationSchema);
 module.exports = Communication;
