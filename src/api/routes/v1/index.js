@@ -9,6 +9,8 @@ const volunteerRoutes = require('./volunteer.route');
 const resourceRoutes = require('./resource.route');
 const projectRoutes = require('./project.route');
 const placesRoutes = require('./places.route');
+const communicationRoutes = require('./communication.route');
+const healthsafetyRoutes = require('./healthsafety.route');
 
 const router = express.Router();
 
@@ -33,5 +35,7 @@ router.use('/volunteer', volunteerRoutes);
 router.use('/resource', resourceRoutes);
 router.use('/project', projectRoutes);
 router.use('/places', placesRoutes);
+router.use('/communication', communicationRoutes);
+router.use('/healthsafety', healthsafetyRoutes);
 
 module.exports = router;
