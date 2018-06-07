@@ -16,6 +16,11 @@ const healthSafetySchema = new mongoose.Schema({
         type: String,
     },
 
+    status: {
+        type: Number,
+        default: 1
+    },
+
     lsc: {
         type: String,
     },

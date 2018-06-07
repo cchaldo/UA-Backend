@@ -10,6 +10,11 @@ const communicationSchema = new mongoose.Schema({
         type : String,
     },
     
+    status: {
+        type: Number,
+        default: 1
+    },
+
     revelvantUA: {
         type: String,
     },

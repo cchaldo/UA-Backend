@@ -14,6 +14,11 @@ const executionSchema = new mongoose.Schema({
         type: String,
     },
 
+    status: {
+        type: Number,
+        default: 1
+    },
+
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
