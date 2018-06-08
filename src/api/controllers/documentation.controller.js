@@ -4,15 +4,18 @@ const {handler: errorHandler} = require('../middlewares/error');
 
 exports.create = async (req,res,next) => {
     try {
-        
-        const documentObj = await new Document(req.body);
-        const document = await documentObj.save();
+        req.body.attachments = req.body.attachedFiles;
+        req.body.attachedFiles = null;
 
-        res.status(httpStatus.OK);2
+        const obj = await (new Documents(req.body));
+        const docs = await (obj.save());
+        
+
+        res.status(httpStatus.OK);
         return res.json({
-            document,
+            docs,
             'message': 'Created'
-        })
+        });
 
     } catch (error) {
         
@@ -79,7 +82,7 @@ exports.view = async (req,res,next) => {
         
         const document = await Documents.findById(req.params.id);
 
-        res.status(httpStatus.Ok);
+        res.status(httpStatus.OK);
 
         return res.json({
             document,

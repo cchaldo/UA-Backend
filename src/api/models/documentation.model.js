@@ -4,6 +4,8 @@ const documentationSchema = new mongoose.Schema ({
 
     document : [],
 
+    attachments: [],
+
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -20,7 +22,10 @@ const documentationSchema = new mongoose.Schema ({
         default: 1
     },
 
-});
+},
+    { strict: false }
+
+);
 
 const Documentation = mongoose.model('Documentation', documentationSchema);
 module.exports = Documentation;

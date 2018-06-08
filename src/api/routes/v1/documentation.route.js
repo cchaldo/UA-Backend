@@ -7,30 +7,31 @@ const {createDocuments, updateDocuments} = require('../../validations/documentat
 const router = express.Router();
 
 const multer = require('multer');
-
+const fs = require('fs');
+const path = require('path');
 // to store file names
 let file_name_array = [];
 
 const storage = multer.diskStorage({
 
     destination: function (req, file, cb) {
-        cb(null, 'uploads/activity_stuff/')
+        cb(null, 'uploads/documents/')
     },
 
     filename: function (req, file, cb) {
 
-        if (req.body.attachedFiles == null) {
+        if (req.body.document == null) {
             file_name_array = [];
         }
-
+        
         let ext = file.originalname.split(".");
         ext = ext[ext.length - 1];
 
         const filename = Date.now() + `.${ext}`;
 
         file_name_array.push(filename);
-
-        req.body.attachedFiles = file_name_array;
+        console.log(filename);
+        req.body.document = file_name_array;
         cb(null, filename);
 
     },
@@ -59,7 +60,7 @@ const upload = multer({ storage: storage }).array('attachments');
  */
 router
     .route('/create')
-    .post(authorize(),upload ,validate(createDocuments), controller.create);
+    .post(authorize(), upload ,validate(createDocuments), controller.create);
 
 /**
  * @api {get} v1/documentation/index Documentation List
