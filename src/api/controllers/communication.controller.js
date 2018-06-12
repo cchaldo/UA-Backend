@@ -21,8 +21,8 @@ exports.create = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
     try {
-        const communication = await Communication.find().where();
-        console.log(communication);
+        const communication = await Communication.find().where({projectId: req.params.projectId});
+
         res.status(httpStatus.OK);
         return res.json({
             success: true,
