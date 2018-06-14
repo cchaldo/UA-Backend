@@ -38,7 +38,7 @@ router
  * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
  */
 router
-    .route('/index')
+    .route('/index/:projectId')
     .get(authorize(), controller.index);
 /**
 * @api {patch} v1/healthsafety/update/:id HealthSafety Update

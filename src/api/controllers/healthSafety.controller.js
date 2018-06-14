@@ -23,7 +23,7 @@ exports.create = async (req, res, next) => {
 exports.index = async (req, res, next) => {
     try {
         
-        const healthsafety = await HealthSafety.find().where();
+        const healthsafety = await HealthSafety.find().where({ projectId: req.params.projectId });
         
         res.status(httpStatus.OK);
         

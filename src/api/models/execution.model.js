@@ -19,11 +19,11 @@ const executionSchema = new mongoose.Schema({
         default: 1
     },
 
-    userId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        // required: true,
-    },
+    // userId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'User',
+    //     // required: true,
+    // },
 
     projectId: {
         type: mongoose.Schema.Types.ObjectId,

@@ -24,6 +24,11 @@ const healthSafetySchema = new mongoose.Schema({
     lsc: {
         type: String,
     },
+    projectId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Project',
+        required: true,
+    }
     // userId: {
     //     type: mongoose.Schema.Types.ObjectId,
     //     ref: 'User',
