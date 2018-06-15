@@ -5,7 +5,7 @@ module.exports = {
     // POST /v1/Communication
     createCommunication: {
         body: {
-            moc: Joi.string(),
+            
         },
     },
 
@@ -13,7 +13,7 @@ module.exports = {
     // PATCH /v1/communication/:id
     updateCommunication: {
         body: {
-            moc: Joi.string(),
+           
         },
     },
 };

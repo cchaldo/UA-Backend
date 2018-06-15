@@ -19,14 +19,10 @@ const projectSchema = new mongoose.Schema({
   projectType: {
     type: Number,
   },
-  
-  // Project Description
   description: {
     type: String
   },
 
-
-  // Project Place
   place: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Places',
@@ -49,8 +45,7 @@ const projectSchema = new mongoose.Schema({
   pkeywords: {
     type: String,
   },
-
-
+  
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

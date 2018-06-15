@@ -40,7 +40,7 @@ router
  *
  * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
  */
-router.route('/index')
+router.route('/index/:projectId')
     .get(authorize(), controller.index);
 
 
