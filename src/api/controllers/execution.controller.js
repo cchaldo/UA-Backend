@@ -59,7 +59,7 @@ exports.delete = async (req, res, next) => {
         res.status(httpStatus.OK);
         return res.json({
             execution,
-            'message' : 'Deleted,'
+            'message' : 'Deleted'
         });
     } catch (error) {
         return res.json(error);

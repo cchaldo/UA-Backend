@@ -27,8 +27,8 @@ exports.create = async (req,res,next) => {
 exports.index = async (req,res,next) => {
     try {
         
-        const document = await Documents.find().where();
-
+        const document = await Documents.find().where({ projectId: req.params.projectId });
+        console.log(document);
         res.status(httpStatus.OK);
 
         return res.json({

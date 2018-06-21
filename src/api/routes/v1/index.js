@@ -26,6 +26,7 @@ router.get('/status', (req, res) => res.send('OK'));
  */
 router.use('/docs', express.static('docs'));
 router.use('/uploads/user_images', express.static('uploads/user_images'));
+router.use('/uploads/documents', express.static('uploads/documents'));
 
 router.use('/users', userRoutes);
 router.use('/auth', authRoutes);
