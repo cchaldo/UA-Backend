@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 
 const documentationSchema = new mongoose.Schema ({
 
+    name: {
+        type: String,
+        required: true
+    },
+
     document : [],
 
     attachments: [],
