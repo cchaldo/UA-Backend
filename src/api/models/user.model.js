@@ -74,6 +74,7 @@ const userSchema = new mongoose.Schema({
  * - virtuals
  */
 userSchema.pre('save', async function save(next) {
+
   try {
     if (!this.isModified('password')) return next();
 
@@ -85,7 +86,9 @@ userSchema.pre('save', async function save(next) {
     return next();
   } catch (error) {
     return next(error);
+
   }
+
 });
 
 /**
@@ -98,6 +101,7 @@ userSchema.method({
 
     fields.forEach((field) => {
       transformed[field] = this[field];
+      
     });
 
     return transformed;
@@ -120,6 +124,7 @@ userSchema.method({
 /**
  * Statics
  */
+
 userSchema.statics = {
 
   roles,
@@ -131,6 +136,7 @@ userSchema.statics = {
    * @param {ObjectId} id - The objectId of user.
    * @returns {Promise<User, APIError>}
    */
+  
   async get(id) {
     try {
       let user;

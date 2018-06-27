@@ -39,6 +39,7 @@ const handleJWT = (req, res, next, roles) => async (err, user, info) => {
   req.user = user;
 
   return next();
+  
 };
 
 exports.ADMIN = ADMIN;
