@@ -13,6 +13,7 @@ const communicationRoutes = require('./communication.route');
 const healthsafetyRoutes = require('./healthsafety.route');
 const executionRoutes = require('./execution.route');
 const documentationRoutes = require('./documentation.route');
+const resourcesRoutes = require('./resources.route');
 
 const router = express.Router();
 
@@ -42,6 +43,7 @@ router.use('/communication', communicationRoutes);
 router.use('/healthsafety', healthsafetyRoutes);
 router.use('/execution', executionRoutes);
 router.use('/documentation', documentationRoutes);
+router.use('/resources', resourcesRoutes);
 
 
 module.exports = router;
