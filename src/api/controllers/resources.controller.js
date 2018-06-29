@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const Resources = require('../models/resources.model');
 const { handler: errorHandler } = require('../middlewares/error');
+const place = require('./places.controller');   
 
 exports.create = async (req, res, next) => {
   try{
@@ -20,7 +21,7 @@ exports.create = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
     try {
-        const resources = await Resources.find().where({ projectId: req.params.projectId });
+        const resources = await Resources.find().where({ projectId: req.params.projectId }).populate(['placeId']);
 
         res.status(httpStatus.OK);
         return res.json({
