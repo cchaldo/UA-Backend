@@ -6,6 +6,7 @@ module.exports = {
     createPlaces: {
         body: {
             name: Joi.string().required(),
+            userId: Joi.string().required()
         },
     },
 
@@ -14,6 +15,7 @@ module.exports = {
     updatePlaces: {
         body: {
             name: Joi.string(),
+            userId: Joi.string().required()
         },
     },
 };

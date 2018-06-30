@@ -29,13 +29,15 @@ const projectSchema = new mongoose.Schema({
     required: true, 
   },
 
-  date: {
+  startDate: {
+    type: Date,
+  },
+  endDate: {
     type: Date,
   },
 
   time : {
-    type: Date, 
-    default: Date.now 
+    type: String
   },
 
   pgoals: {

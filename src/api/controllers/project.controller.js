@@ -41,10 +41,10 @@ exports.index = async (req, res, next) => {
   try{
     
     const {page, limit} = req.query;
-    const project = await Project.paginate({status: 1}, {
+    const project = await Project.paginate({ status: 1 }, { populate: ['place'] }, {
       page: page,
       limit: 10
-    })
+    });
     
     res.status(httpStatus.OK);
       return res.json({

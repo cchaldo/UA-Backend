@@ -6,6 +6,7 @@ module.exports = {
     createExecution: {
         body: {
             entry: Joi.string(),
+            placeId: Joi.string().required()
         },
     },
 
@@ -14,6 +15,7 @@ module.exports = {
     updateExecution: {
         body: {
             entry: Joi.string(),
+            placeId: Joi.string().required()
         },
     },
 };
