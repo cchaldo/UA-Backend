@@ -12,7 +12,8 @@ module.exports = {
     // PATCH /v1/Resources/:id
     updateResources: {
         body: {
-            item: Joi.string()
+            item: Joi.string(),
+            placeId: Joi.string().required()
         }
     }
 };

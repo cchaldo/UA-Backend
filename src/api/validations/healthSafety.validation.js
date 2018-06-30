@@ -8,7 +8,8 @@ module.exports = {
         
             location: Joi.string(),
             lmc: Joi.string(),
-            lsc: Joi.string()
+            lsc: Joi.string(),
+            placeId: Joi.string().required()
         }
     },
 
@@ -17,7 +18,8 @@ module.exports = {
         body: {
             location: Joi.string(),
             lmc: Joi.string(),
-            lsc: Joi.string()
+            lsc: Joi.string(),
+            placeId: Joi.string().required()
         }
     }
 };
