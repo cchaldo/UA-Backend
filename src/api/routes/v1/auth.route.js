@@ -10,6 +10,7 @@ const {
   socialSignup,
   linkedinSignup,
   setNewPassword,
+  validatePassphrase
 } = require('../../validations/auth.validation');
 
 const router = express.Router();
@@ -258,6 +259,23 @@ router.route('/resetpassword')
 
 router.route('/setnewpassword')
   .post(validate(setNewPassword), controller.setNewPassword);
+
+/**
+ * @api {post} v1/auth/passphrase
+ * @apiDescription Login using passphrase
+ * @apiVersion 1.0.0
+ * @apiName Login with passphrase
+ * @apiGroup Auth
+ * @apiPermission public
+ *
+ * @apiParam  {String}  passphrase  Passphrase
+ * @apiParam  {String}  code  Code Received as a param form email link
+ *
+ * @apiError (Bad Request 400)  ValidationError  Some parameters may contain invalid values
+ */
+
+router.route('/passphrase')
+  .post(validate(validatePassphrase), controller.passphrase);
 
 
 

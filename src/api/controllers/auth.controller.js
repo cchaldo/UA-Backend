@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 
 const User = require('../models/user.model');
+const Passphrase = require('../models/passphrase.model');
 
 const Profile = require('../models/profile.model');
 const PasswordReset = require('../models/passwordReset.model');
@@ -95,7 +96,7 @@ exports.socialSignup = async (req, res, next) => {
       user.picture  = req.body.picture;
       user.status   = req.body.status;
       user.sources.push(req.body.source);
-      user.acccessToken = req.body.accessToken;
+      user.accessToken = req.body.accessToken;
       if (req.body.source == 'facebook') {
         user.facebookId = req.body.userId;
       }
@@ -147,7 +148,6 @@ exports.socialSignup = async (req, res, next) => {
     const token = generateTokenResponse(currentUser, accessToken);
     const userTransformed = currentUser.transform();
     const profile = await(Profile.findOne({userId: userTransformed.id}));
-    console.log(profile)
     return res.json({ token, user: userTransformed, profile: profile });
 
   } catch (error) {
@@ -362,3 +362,37 @@ exports.setNewPassword = async (req, res) => {
     return res.json(error);
   }
 }
+
+
+
+/**
+ * Returns jwt token if valid username and password is provided
+ * @public
+ */
+exports.passphrase = async (req, res, next) => {
+  try {
+
+    const [passphrase] = await Passphrase.find().where({passphrase: req.body.passphrase});
+      if (passphrase) {
+      const email = process.env.TEST_USER_EMAIL;
+      const currentUser = await User.findOne({email: email}).exec();
+      const accessToken = await currentUser.token();
+      const token = generateTokenResponse(currentUser, accessToken);
+      const userTransformed = currentUser.transform();
+      const profile = await(Profile.findOne({userId: userTransformed.id}));
+      return res.json({ token, user: userTransformed, profile: profile });
+
+    }
+    else{
+      res.status(httpStatus.BAD_REQUEST);
+      return res.json({
+        status: 0,
+        message: "The passphrase you have entered is invalid"
+      });
+    }
+  
+  } catch (error) {
+    return next(error);
+  }
+};
+
