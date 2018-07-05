@@ -1,5 +1,6 @@
 const express = require('express');
 const userRoutes = require('./user.route');
+const passpharaseRoutes = require('./passpharase.route');
 const authRoutes = require('./auth.route');
 const profileRoutes = require('./profile.route');
 const skillRoutes = require('./skill.route');
@@ -44,6 +45,7 @@ router.use('/healthsafety', healthsafetyRoutes);
 router.use('/execution', executionRoutes);
 router.use('/documentation', documentationRoutes);
 router.use('/resources', resourcesRoutes);
+router.use('/passpharase', passpharaseRoutes);
 
 
 module.exports = router;
