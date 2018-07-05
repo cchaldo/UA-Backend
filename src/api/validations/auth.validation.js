@@ -60,4 +60,11 @@ module.exports = {
     },
   },
 
+  // POST /v1/auth/passphrase
+    validatePassphrase: {
+    body: {
+      passphrase: Joi.string().required().min(6).max(6),
+    },
+  },
+
 };

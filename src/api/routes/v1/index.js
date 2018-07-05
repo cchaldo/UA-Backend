@@ -1,6 +1,5 @@
 const express = require('express');
 const userRoutes = require('./user.route');
-const passpharaseRoutes = require('./passpharase.route');
 const authRoutes = require('./auth.route');
 const profileRoutes = require('./profile.route');
 const skillRoutes = require('./skill.route');
@@ -15,6 +14,7 @@ const healthsafetyRoutes = require('./healthsafety.route');
 const executionRoutes = require('./execution.route');
 const documentationRoutes = require('./documentation.route');
 const resourcesRoutes = require('./resources.route');
+const passphraseRoutes = require('./passphrase.route');
 
 const router = express.Router();
 
@@ -45,7 +45,7 @@ router.use('/healthsafety', healthsafetyRoutes);
 router.use('/execution', executionRoutes);
 router.use('/documentation', documentationRoutes);
 router.use('/resources', resourcesRoutes);
-router.use('/passpharase', passpharaseRoutes);
+router.use('/passphrase', passphraseRoutes);
 
 
 module.exports = router;

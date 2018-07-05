@@ -3,6 +3,7 @@ const passport = require('passport');
 const User = require('../models/user.model');
 const APIError = require('../utils/APIError');
 
+const SUPER_ADMIN = 'super_admin';
 const ADMIN = 'admin';
 const LOGGED_USER = '_loggedUser';
 
@@ -39,8 +40,10 @@ const handleJWT = (req, res, next, roles) => async (err, user, info) => {
   req.user = user;
 
   return next();
+  
 };
 
+exports.SUPER_ADMIN = SUPER_ADMIN;
 exports.ADMIN = ADMIN;
 exports.LOGGED_USER = LOGGED_USER;
 
