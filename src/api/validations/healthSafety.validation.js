@@ -9,7 +9,7 @@ module.exports = {
             location: Joi.string(),
             lmc: Joi.string(),
             lsc: Joi.string(),
-            placeId: Joi.string().required()
+            // placeId: Joi.string().required()
         }
     },
 
@@ -19,7 +19,7 @@ module.exports = {
             location: Joi.string(),
             lmc: Joi.string(),
             lsc: Joi.string(),
-            placeId: Joi.string().required()
+            // placeId: Joi.string().required()
         }
     }
 };
