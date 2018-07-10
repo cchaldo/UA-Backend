@@ -5,7 +5,7 @@ module.exports = {
     // POST /v1/Documents
     createDocuments : {
         body: {
-            placeId: Joi.string().required(),
+            // placeId: Joi.string().required(),
             name: Joi.string().required()
         }
     },
@@ -13,7 +13,7 @@ module.exports = {
     // PATCH /v1/Documents/:id
     updateDocuments: {
         body: {
-            placeId: Joi.string().required(),
+            // placeId: Joi.string().required(),
             name: Joi.string().required()
         }
     }
