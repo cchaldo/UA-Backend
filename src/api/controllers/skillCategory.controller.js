@@ -1,14 +1,16 @@
 const httpStatus = require('http-status');
-const Skill = require('../models/skill.model');
+const SkillCategory = require('../models/skillCategory.model');
 const { handler: errorHandler } = require('../middlewares/error');
 
 exports.create = async (req, res, next) => {
 	try{
-		const skillObj  = await new Skill(req.body);
-		const skill     = await skillObj.save();
+		const skillCategory  = await new SkillCategory(req.body).save();
     	res.status(httpStatus.OK);
 		 
-		return res.json({skill});
+		return res.json({
+			success: 1,
+			skillCategory
+		});
 	}
 	catch(error){
 		return res.json(error);
@@ -18,11 +20,11 @@ exports.create = async (req, res, next) => {
 
 exports.view = async (req, res, next) => {
 	try{
-		const skill = await Skill.findById(req.params.id).populate('categoryId');
+		const skillCategory = await SkillCategory.findById(req.params.id);
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
-    						skill 
+    						skillCategory 
     					});
 	}
 	catch(error){
@@ -33,11 +35,11 @@ exports.view = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
 	try{
-		const skill = await Skill.find().where({status: 1}).populate('categoryId');
+		const skillCategories = await SkillCategory.find().where({status: 1});
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
-    						skill 
+    						skillCategories
     					});
 	}
 	catch(error){
@@ -49,12 +51,12 @@ exports.index = async (req, res, next) => {
 
 exports.update = async (req, res, next) => {
 	try{
-      const skill = await Skill.update({_id: req.params.id}, req.body);
+      const skillCategory = await SkillCategory.update({_id: req.params.id}, req.body);
 
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
-    						skill
+    						skillCategory
     					});
 	}
 	catch(error){
@@ -65,7 +67,7 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
 	try{
-      const skill = await Skill.update({_id: req.params.id}, {status:0});
+      const skillCategory = await SkillCategory.update({_id: req.params.id}, {status:0});
 
     	res.status(httpStatus.OK);
     	return res.json({
