@@ -17,7 +17,12 @@ const userSkillSchema = new mongoose.Schema({
     ref: 'Skill',
     required: true,
   },
-  
+  type: {
+    type: Number,
+  },
+  rating:{
+    type: Number,
+  },
   status: {
   	type: Number,
   	default: 1

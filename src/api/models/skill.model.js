@@ -10,6 +10,10 @@ const skillSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  categoryId: {
+  	type: mongoose.Schema.Types.ObjectId,
+    ref: 'SkillCategory',
+  },
   status: {
   	type: Number,
   	default: 1

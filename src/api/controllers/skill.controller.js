@@ -18,7 +18,7 @@ exports.create = async (req, res, next) => {
 
 exports.view = async (req, res, next) => {
 	try{
-		const skill = await Skill.findById(req.params.id);
+		const skill = await Skill.findById(req.params.id).populate('categoryId');
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,
@@ -33,7 +33,7 @@ exports.view = async (req, res, next) => {
 
 exports.index = async (req, res, next) => {
 	try{
-		const skill = await Skill.find().where({status: 1});
+		const skill = await Skill.find().where({status: 1}).populate('categoryId');
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,

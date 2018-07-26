@@ -6,6 +6,8 @@ module.exports = {
 		body:{
 			userId:Joi.string().required(),
 			skillId:Joi.string().required(),
+			rating:Joi.number().required(),
+			type:Joi.number().required(),
 		}
 	},
 	

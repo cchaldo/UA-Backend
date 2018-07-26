@@ -1,40 +1,39 @@
 const express = require('express');
 const validate = require('express-validation');
-const controller = require('../../controllers/skill.controller');
+const controller = require('../../controllers/skillCategory.controller');
 const { authorize, ADMIN, LOGGED_USER } = require('../../middlewares/auth');
-const {createSkill,updateSkill} = require('../../validations/skill.validation');
+const {createSkillCategory,updateSkillCategory} = require('../../validations/skillCategory.validation');
 
 const router = express.Router();
 
 
   /**
-   * @api {post} v1/skill/create  Skill
-   * @apiDescription Create Skill
+   * @api {post} v1/skillCategory/create  SkillCategory
+   * @apiDescription Create SkillCategory
    * @apiVersion 1.0.0
-   * @apiName CreateSkill
-   * @apiGroup Skill
+   * @apiName CreateSkillCategory
+   * @apiGroup SkillCategory
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
    *
-   * @apiParam  {String}             name           SKill's name
-   * @apiParam  {String}             categoryId     CategoryId will come from the skillCategories api.
+   * @apiParam  {String}             name     			SKill Category name
    *
-   * @apiSuccess {String}  name       Skill's name
+   * @apiSuccess {String}  name       Skill Category name
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
 	router.route('/create')
-   .post(authorize(), validate(createSkill), controller.create);
+   .post(authorize(), validate(createSkillCategory), controller.create);
 
 
 
   /**
-   * @api {get} v1/skill/view/:id Skill View
-   * @apiDescription Get Skill
+   * @api {get} v1/skillCategory/view/:id Skill View
+   * @apiDescription Get SkillCategory
    * @apiVersion 1.0.0
-   * @apiName ViewSkill
-   * @apiGroup Skill
+   * @apiName ViewSkillCategory
+   * @apiGroup SkillCategory
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
@@ -46,11 +45,11 @@ const router = express.Router();
 
   
   /**
-   * @api {get} v1/skill/index Skills List
-   * @apiDescription Get Skills List
+   * @api {get} v1/skillCategory/index Skills List
+   * @apiDescription Get SkillCategories List
    * @apiVersion 1.0.0
-   * @apiName SkillsList
-   * @apiGroup Skill
+   * @apiName SkillsListCategory
+   * @apiGroup SkillCategory
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
@@ -65,33 +64,33 @@ const router = express.Router();
 
 
   /**
-   * @api {patch} v1/skill/update/:id Skill
-   * @apiDescription update skill
+   * @api {patch} v1/skillCategory/update/:id Skill
+   * @apiDescription update skill category
    * @apiVersion 1.0.0
-   * @apiName UpdateSkill
-   * @apiGroup Skill
+   * @apiName UpdateSkillCategory
+   * @apiGroup SkillCategory
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
    *
-   * @apiParam  {String}             name           SKill's name
+   * @apiParam  {String}             name           SKill Category's name
    *
-   * @apiSuccess {String}  name       Skill's name
+   * @apiSuccess {String}  name       Skill Category's name
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */
   router.route('/update/:id')
-   .patch(authorize(), validate(updateSkill), controller.update);
+   .patch(authorize(), validate(updateSkillCategory), controller.update);
 
 
   
 
   /**
-   * @api {delete} v1/skill/delete/:id Skill
-   * @apiDescription delete skill
+   * @api {delete} v1/skillCategory/delete/:id Skill
+   * @apiDescription delete skill category
    * @apiVersion 1.0.0
-   * @apiName DeleteSkill
-   * @apiGroup Skill
+   * @apiName DeleteSkillCategory
+   * @apiGroup SkillCategory
    * @apiPermission admin
    *
    * @apiHeader {String} Athorization  User's access token
