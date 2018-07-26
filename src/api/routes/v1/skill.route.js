@@ -17,7 +17,8 @@ const router = express.Router();
    *
    * @apiHeader {String} Athorization  User's access token
    *
-   * @apiParam  {String}             name     			SKill's name
+   * @apiParam  {String}             name           SKill's name
+   * @apiParam  {String}             categoryId     CategoryId will come from the skillCategories api.
    *
    * @apiSuccess {String}  name       Skill's name
    *

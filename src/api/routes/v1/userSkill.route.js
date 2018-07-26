@@ -18,7 +18,9 @@ const router = express.Router();
    * @apiHeader {String} Athorization  User's access token
    *
    * @apiParam  {String}             skillId          skillId comes from skills 
-   * @apiParam  {String}             userId     			userId comes from user 
+   * @apiParam  {String}             userId           userId comes from user 
+   * @apiParam  {Number}             type             Type always be 1 or 2. if type is 1, it means user have that skill, if type is 2 it means user want that skill 
+   * @apiParam  {Number}             rating           rating of user skill, it must be between 1 to 5, 
    *
    * @apiError (Unauthorized 401)  Unauthorized  Only authenticated Users can access the data
    */

@@ -1,3 +1,4 @@
+
 const httpStatus = require('http-status');
 const UserSkill  = require('../models/userSkill.model');
 const { handler: errorHandler } = require('../middlewares/error');
@@ -35,7 +36,7 @@ exports.create = async (req, res, next) => {
 
 exports.view = async (req, res, next) => {
 	try{
-		const user_skill = await UserSkill.findById(req.params.id);
+		const user_skill = await UserSkill.findById(req.params.id).populate('skillId');
     	res.status(httpStatus.OK);
     	return res.json({
     						success: true,

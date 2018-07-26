@@ -17,11 +17,11 @@ const userSkillSchema = new mongoose.Schema({
     ref: 'Skill',
     required: true,
   },
-  want: {
-    type: Number
+  type: {
+    type: Number,
   },
-  have: {
-    type: Number
+  rating:{
+    type: Number,
   },
   status: {
   	type: Number,
