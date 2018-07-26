@@ -15,6 +15,7 @@ const executionRoutes = require('./execution.route');
 const documentationRoutes = require('./documentation.route');
 const resourcesRoutes = require('./resources.route');
 const passphraseRoutes = require('./passphrase.route');
+const skillCategoryRoutes = require('./skillCategory.route');
 
 const router = express.Router();
 
@@ -46,6 +47,7 @@ router.use('/execution', executionRoutes);
 router.use('/documentation', documentationRoutes);
 router.use('/resources', resourcesRoutes);
 router.use('/passphrase', passphraseRoutes);
+router.use('/skillCategory', skillCategoryRoutes);
 
 
 module.exports = router;
