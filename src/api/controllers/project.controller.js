@@ -23,7 +23,8 @@ exports.view = async (req, res, next) => {
   
   
   try{
-    const project = await Project.findById(req.params.id).populate(['place']);
+    const project = await Project.findById(req.params.id);
+    // .populate(['place']);
       res.status(httpStatus.OK);
       return res.json({
                 success: true,
