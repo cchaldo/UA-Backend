@@ -24,9 +24,10 @@ const projectSchema = new mongoose.Schema({
   },
 
   place: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Places',
-    required: true, 
+    type: String
+    // type: mongoose.Schema.Types.ObjectId,
+    // ref: 'Places',
+    // required: true, 
   },
 
   startDate: {
